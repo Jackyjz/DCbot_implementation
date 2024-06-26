@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
-from apikeys import dcbottoken,channel_id
-import requests
+from apikeys import dcbottoken, channel_id
 
 intents = discord.Intents.default()
 intents.members = True
@@ -24,18 +23,16 @@ async def goodbye(ctx):
 
 @client.event
 async def on_member_join(member):
+    print(f"on_member_join event triggered for {member}")
     channel = client.get_channel(channel_id)  
     if channel:
         await channel.send(f"Hello {member.mention}! Welcome to the server!")
 
-
 @client.event 
 async def on_member_remove(member):
+    print(f"on_member_remove event triggered for {member}")
     channel = client.get_channel(channel_id)
     if channel:
         await channel.send(f"{member.mention} has left the server. Goodbye!")
 
-
-
 client.run(dcbottoken)
-
