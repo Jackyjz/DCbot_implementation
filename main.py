@@ -1,10 +1,11 @@
 import discord
 from discord.ext import commands
-from apikeys import dcbottoken
+from apikeys import dcbottoken,channel_id
+import requests
 
 intents = discord.Intents.default()
 intents.members = True
-intents.message_content = True  # Add this line
+intents.message_content = True  
 
 client = commands.Bot(command_prefix='!', intents=intents)
 
@@ -23,8 +24,18 @@ async def goodbye(ctx):
 
 @client.event
 async def on_member_join(member):
-    channel = client.get_channel(1091095815851876468)  # Use the ID of the channel you want to send the message to
+    channel = client.get_channel(channel_id)  
     if channel:
         await channel.send(f"Hello {member.mention}! Welcome to the server!")
 
+
+@client.event 
+async def on_member_remove(member):
+    channel = client.get_channel(channel_id)
+    if channel:
+        await channel.send(f"{member.mention} has left the server. Goodbye!")
+
+
+
 client.run(dcbottoken)
+
